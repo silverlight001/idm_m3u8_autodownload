@@ -5,12 +5,12 @@
 1. Open Chrome: `chrome://extensions`
 2. Enable Developer mode.
 3. Click Load unpacked.
-4. Select `D:\idmm3u8\chrome-m3u8-catcher`.
+4. Select this repository's `chrome-m3u8-catcher` folder.
 5. Copy the extension ID shown by Chrome.
 
 ## Register native host
 
-Run PowerShell in `D:\idmm3u8`:
+Run PowerShell in the repository root:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install-chrome-native-host.ps1 -ExtensionId "PASTE_EXTENSION_ID_HERE"

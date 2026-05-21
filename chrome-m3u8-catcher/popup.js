@@ -24,7 +24,7 @@ async function load() {
 
   $("enabled").checked = Boolean(state.enabled);
   $("autoSend").checked = Boolean(state.autoSend);
-  $("workDir").value = todayPath(state.workDirTemplate || "D:\\srep\\{yyyyMMdd}");
+  $("workDir").value = todayPath(state.workDirTemplate || "D:\\Downloads\\m3u8\\{yyyyMMdd}");
   $("title").value = capture.title || "";
   $("url").value = capture.url || "";
   const inferred = capture.rawMediaType === "segment" && capture.mediaType === "hls" ? " (inferred from segment)" : "";

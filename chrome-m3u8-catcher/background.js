@@ -7,7 +7,7 @@ const DEFAULT_STATE = {
   lastCapture: null,
   captures: [],
   segmentGroups: {},
-  workDirTemplate: "D:\\srep\\{yyyyMMdd}",
+  workDirTemplate: "D:\\Downloads\\m3u8\\{yyyyMMdd}",
   autoSend: false
 };
 

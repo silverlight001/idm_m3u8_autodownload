@@ -27,7 +27,7 @@ function Read-Config {
     $defaults = [pscustomobject]@{
         downloaderDir      = (Join-Path $PSScriptRoot "N_m3u8DL-CLI_v3.0.2_with_ffmpeg_and_SimpleG")
         cliExe             = "N_m3u8DL-CLI_v3.0.2.exe"
-        workDirTemplate    = "D:\srep\{yyyyMMdd}"
+        workDirTemplate    = "D:\Downloads\m3u8\{yyyyMMdd}"
         pollSeconds        = 1
         pollMilliseconds   = 150
         enableDelAfterDone = $true
