@@ -41,6 +41,14 @@ The Chrome extension in `chrome-m3u8-catcher/` is experimental. The IDM-dialog t
 
 This repository does not ship IDM, ffmpeg, or N_m3u8DL binaries.
 
+## Legal Notice
+
+This project is provided for personal automation, research, and interoperability with content you are authorized to access and download. You are responsible for complying with copyright law, platform terms, and local regulations.
+
+Do not use this project to download copyrighted content without permission, bypass DRM or access controls, redistribute protected media, or violate a service's terms of use. In the United States, the DMCA includes anti-circumvention rules for technological protection measures; other countries and regions may have similar rules.
+
+The author does not host media, provide download sources, include third-party downloader binaries, or endorse infringement. Use this software at your own risk.
+
 ## Setup
 
 Copy the example config if you want to customize paths:
