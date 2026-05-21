@@ -1,0 +1,16 @@
+{
+  "downloaderDir": "D:\\idmm3u8\\N_m3u8DL-CLI_v3.0.2_with_ffmpeg_and_SimpleG",
+  "cliExe": "N_m3u8DL-CLI_v3.0.2.exe",
+  "workDirTemplate": "D:\\srep\\{yyyyMMdd}",
+  "pollSeconds": 1,
+  "pollMilliseconds": 150,
+  "enableDelAfterDone": true,
+  "takeoverIdmDialogs": true,
+  "closeIdmDialogAfterSubmit": true,
+  "consoleCodePage": 65001,
+  "foregroundKeyboardTakeover": true,
+  "idmSaveAsTabCount": 3,
+  "keyboardDelayMs": 45,
+  "inspectFocusDelaySeconds": 3,
+  "additionalArgs": []
+}

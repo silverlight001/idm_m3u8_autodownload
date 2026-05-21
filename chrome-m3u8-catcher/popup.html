@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>m3u8DL Catcher</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main>
+    <header>
+      <strong>Video Catcher</strong>
+      <label class="switch">
+        <input id="enabled" type="checkbox">
+        <span></span>
+      </label>
+    </header>
+
+    <section>
+      <label>Save folder</label>
+      <input id="workDir" spellcheck="false">
+    </section>
+
+    <section>
+      <label>Title</label>
+      <input id="title" spellcheck="false">
+    </section>
+
+    <section>
+      <label>Video URL</label>
+      <textarea id="url" spellcheck="false"></textarea>
+    </section>
+
+    <div class="row">
+      <label class="auto">
+        <input id="autoSend" type="checkbox">
+        Auto
+      </label>
+      <button id="download">Download</button>
+    </div>
+
+    <p id="status"></p>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

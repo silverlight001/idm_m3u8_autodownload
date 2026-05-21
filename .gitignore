@@ -1,0 +1,16 @@
+.auto-m3u8dl/
+auto-m3u8dl.config.json
+
+# Third-party binaries and generated logs
+N_m3u8DL-CLI_v3.0.2_with_ffmpeg_and_SimpleG/
+
+# Generated native-host artifacts
+native-host/*.exe
+native-host/com.local.m3u8dl.json
+native-host/node-path.txt
+
+# Local/editor noise
+*.log
+*.tmp
+Thumbs.db
+Desktop.ini
