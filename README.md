@@ -1,5 +1,13 @@
 # IDM m3u8DL Takeover
 
+English | [简体中文](README.zh-CN.md)
+
+## Bilingual Summary
+
+EN: A Windows helper that automatically takes over IDM video download dialogs and sends the same m3u8 URL, file name, and save folder to `N_m3u8DL-CLI`.
+
+ZH: 一个 Windows 小工具，自动接管 IDM 的视频下载弹窗，并把相同的 m3u8 地址、文件名和保存目录交给 `N_m3u8DL-CLI` 下载。
+
 Automatically takes over Internet Download Manager's "Download File Info" dialog and submits the detected m3u8 task to `N_m3u8DL-CLI`.
 
 The main and recommended workflow is:
