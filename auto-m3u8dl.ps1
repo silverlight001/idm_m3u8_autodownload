@@ -431,6 +431,29 @@ function Get-ClipboardText {
     }
 }
 
+function Protect-UrlForLog {
+    param([string]$Url)
+
+    try {
+        $builder = [UriBuilder]::new($Url)
+        if (-not $builder.Query) { return $Url }
+
+        $query = $builder.Query.TrimStart("?")
+        $masked = @()
+        foreach ($part in ($query -split "&")) {
+            if ($part -match "^(auth_key|token|key|sign|signature|expires|expire|ts)=") {
+                $masked += (($part -split "=", 2)[0] + "=<masked>")
+            } else {
+                $masked += $part
+            }
+        }
+        $builder.Query = ($masked -join "&")
+        return $builder.Uri.AbsoluteUri
+    } catch {
+        return $Url
+    }
+}
+
 function Invoke-M3u8Download {
     param(
         [object]$Config,
@@ -448,24 +471,40 @@ function Invoke-M3u8Download {
 
     New-Item -ItemType Directory -Force -Path $SaveDir | Out-Null
 
-    $args = @(
-        $M3u8Url,
-        "--workDir", $SaveDir,
-        "--saveName", $SaveTitle
+    $taskRunner = Join-Path $PSScriptRoot "run-m3u8dl-task.ps1"
+    if (-not (Test-Path -LiteralPath $taskRunner)) {
+        throw "Task runner not found: $taskRunner"
+    }
+
+    $taskId = Get-Date -Format "yyyyMMdd-HHmmss-ffff"
+    $safeUrl = Protect-UrlForLog -Url $M3u8Url
+    $line = "[{0}] START task={1} title=`"{2}`" workDir=`"{3}`" url=`"{4}`"" -f (Get-Date -Format "yyyy-MM-dd HH:mm:ss"), $taskId, $SaveTitle, $SaveDir, $safeUrl
+    Add-Content -LiteralPath $LogPath -Encoding UTF8 -Value $line
+
+    $runnerArgs = @(
+        "-NoProfile",
+        "-ExecutionPolicy", "Bypass",
+        "-File", $taskRunner,
+        "-DownloaderPath", $cliPath,
+        "-DownloaderDir", $downloaderDir,
+        "-Url", $M3u8Url,
+        "-SaveDir", $SaveDir,
+        "-SaveTitle", $SaveTitle,
+        "-TaskId", $taskId,
+        "-LogDir", (Join-Path $PSScriptRoot ".auto-m3u8dl")
     )
 
     if ($Config.enableDelAfterDone) {
-        $args += "--enableDelAfterDone"
+        $runnerArgs += "-EnableDelAfterDone"
     }
 
     if ($Config.additionalArgs) {
-        $args += @($Config.additionalArgs)
+        foreach ($arg in @($Config.additionalArgs)) {
+            $runnerArgs += @("-AdditionalArgs", [string]$arg)
+        }
     }
 
-    $line = "[{0}] START title=`"{1}`" workDir=`"{2}`" url=`"{3}`"" -f (Get-Date -Format "yyyy-MM-dd HH:mm:ss"), $SaveTitle, $SaveDir, $M3u8Url
-    Add-Content -LiteralPath $LogPath -Encoding UTF8 -Value $line
-
-    Start-Process -FilePath $cliPath -ArgumentList $args -WorkingDirectory $downloaderDir
+    Start-Process -FilePath "powershell.exe" -ArgumentList $runnerArgs -WorkingDirectory $PSScriptRoot -WindowStyle Hidden
 }
 
 $config = Read-Config -Path $ConfigPath
