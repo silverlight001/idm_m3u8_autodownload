@@ -37,6 +37,8 @@ function Read-Config {
         foregroundKeyboardTakeover = $true
         idmSaveAsTabCount  = 3
         keyboardDelayMs    = 45
+        showProgressWindow = $true
+        keepProgressWindowOpen = $false
         additionalArgs     = @()
     }
 
@@ -505,6 +507,14 @@ function Invoke-M3u8Download {
         $runnerArgs += "-EnableDelAfterDone"
     }
 
+    if ($Config.showProgressWindow) {
+        $runnerArgs += "-ShowProgressWindow"
+    }
+
+    if ($Config.keepProgressWindowOpen) {
+        $runnerArgs += "-KeepProgressWindowOpen"
+    }
+
     if ($Config.additionalArgs) {
         foreach ($arg in @($Config.additionalArgs)) {
             $runnerArgs += @("-AdditionalArgs", [string]$arg)
@@ -512,7 +522,8 @@ function Invoke-M3u8Download {
     }
 
     $quotedRunnerArgs = ($runnerArgs | ForEach-Object { Quote-ProcessArgument -Value ([string]$_) }) -join " "
-    Start-Process -FilePath "powershell.exe" -ArgumentList $quotedRunnerArgs -WorkingDirectory $PSScriptRoot -WindowStyle Hidden
+    $windowStyle = if ($Config.showProgressWindow) { "Normal" } else { "Hidden" }
+    Start-Process -FilePath "powershell.exe" -ArgumentList $quotedRunnerArgs -WorkingDirectory $PSScriptRoot -WindowStyle $windowStyle
     Add-Content -LiteralPath $LogPath -Encoding UTF8 -Value ("[{0}] LAUNCH task={1}" -f (Get-Date -Format "yyyy-MM-dd HH:mm:ss"), $taskId)
 }
 

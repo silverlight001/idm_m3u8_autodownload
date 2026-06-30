@@ -12,5 +12,7 @@
   "idmSaveAsTabCount": 3,
   "keyboardDelayMs": 45,
   "inspectFocusDelaySeconds": 3,
+  "showProgressWindow": true,
+  "keepProgressWindowOpen": false,
   "additionalArgs": []
 }
