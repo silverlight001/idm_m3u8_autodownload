@@ -454,6 +454,13 @@ function Protect-UrlForLog {
     }
 }
 
+function Quote-ProcessArgument {
+    param([string]$Value)
+
+    if ($null -eq $Value) { return '""' }
+    return '"' + ($Value -replace '\\(?=")', '$0$0' -replace '"', '\"') + '"'
+}
+
 function Invoke-M3u8Download {
     param(
         [object]$Config,
@@ -504,7 +511,9 @@ function Invoke-M3u8Download {
         }
     }
 
-    Start-Process -FilePath "powershell.exe" -ArgumentList $runnerArgs -WorkingDirectory $PSScriptRoot -WindowStyle Hidden
+    $quotedRunnerArgs = ($runnerArgs | ForEach-Object { Quote-ProcessArgument -Value ([string]$_) }) -join " "
+    Start-Process -FilePath "powershell.exe" -ArgumentList $quotedRunnerArgs -WorkingDirectory $PSScriptRoot -WindowStyle Hidden
+    Add-Content -LiteralPath $LogPath -Encoding UTF8 -Value ("[{0}] LAUNCH task={1}" -f (Get-Date -Format "yyyy-MM-dd HH:mm:ss"), $taskId)
 }
 
 $config = Read-Config -Path $ConfigPath
